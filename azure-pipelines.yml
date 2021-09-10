@@ -10,7 +10,7 @@ stages:
   jobs:
   - job: D3
     steps:
-    - bash: echo "This is bad job" | exit 1
+    - bash: echo "This is bad job"
   - job: D4
     steps:
     - bash: echo "This is good job"
