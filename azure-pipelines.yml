@@ -25,4 +25,4 @@ stages:
     - bash: echo "This job only runs when Devx fails"
   - job: UAT2
     steps:
-    - bash: echo "This job only runs when Devx fails"
+    - bash: echo "This job should always run"
