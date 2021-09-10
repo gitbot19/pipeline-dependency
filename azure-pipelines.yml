@@ -10,7 +10,7 @@ stages:
   jobs:
   - job: DD
     steps:
-    - bash: echo "This is bad job"
+    - bash: echo "This is bad job" | exit 1
   - job: EE
     steps:
     - bash: echo "This is good job"
