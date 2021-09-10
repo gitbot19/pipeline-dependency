@@ -17,7 +17,7 @@ stages:
 
 - stage: UAT
   dependsOn: Devx
-  condition: in(stageDependencies.Devx.D3.result, 'Succeeded', 'Failed', 'SucceededWithIssues', 'Skipped')
+  condition: succeededOrFailed()
   jobs:
   - job: UAT
     steps:
