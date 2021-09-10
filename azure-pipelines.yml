@@ -6,23 +6,24 @@ stages:
     steps:
     - bash: echo "This is Dev"
 
-- stage: Devx
+- stage: HadolintTests
   jobs:
-  - job: DD
+  - job: AWS
     steps:
     - bash: echo "This is bad job" | exit 1
-  - job: EE
+  - job: Azure
     steps:
     - bash: echo "This is good job"
 
-- stage: UAT
-  dependsOn: Devx
+- stage: IntegrationTests
+  dependsOn: HadolintTests
   condition: succeededOrFailed()
   jobs:
-  - job: UAT
-    condition: in(stageDependencies.Devx.DD.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+  - job: AWSIT
+    condition: in(stageDependencies.HadolintTests.AWS.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     steps:
-    - bash: echo "This job only runs when Devx fails"
-  - job: UAT2
+    - bash: echo "This job only runs when AWS Hadolint Test passed"
+  - job: AzureIT
+    condition: in(stageDependencies.HadolintTests.Azure.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     steps:
-    - bash: echo "This job should always run"
+    - bash: echo "This job only runs when Azure Hadolint Test passed"
