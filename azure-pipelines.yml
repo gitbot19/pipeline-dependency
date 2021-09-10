@@ -21,7 +21,7 @@ stages:
   jobs:
   - job: UAT
     steps:
-    - bash: echo "This job only runs when Devx fails" + ${stageDependencies.Devx.D3.result}
+    - bash: echo "This job only runs when Devx fails $stageDependencies.Devx.D3.result"
   - job: UAT2
     steps:
     - bash: echo "This job only runs when Devx fails"
