@@ -4,7 +4,7 @@ stages:
   jobs:
   - job: AWS
     steps:
-    - bash: echo "run AWS tests" | exit 0
+    - bash: echo "run AWS tests $(AWS_NAME)" | exit 0
   - job: Azure
     steps:
     - bash: echo "run Azure tests" | exit 1
