@@ -8,7 +8,7 @@ stages:
   jobs:
   - job: A1
     steps:
-     - bash: echo "##vso[task.setvariable variable=shouldrun;isOutput=true]true"
+     - bash: echo "##vso[task.setvariable variable=shouldrun;isOutput=true]true" && exit 1
      # or on Windows:
      # - script: echo ##vso[task.setvariable variable=shouldrun;isOutput=true]true
        name: printvar
