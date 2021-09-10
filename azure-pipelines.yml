@@ -24,3 +24,7 @@ stages:
     condition: in(stageDependencies.HadolintTests.Azure.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     steps:
     - bash: echo "This job only runs when Azure Hadolint Test passed"
+  - job: GCPIT
+    condition: in(stageDependencies.HadolintTests.GCP.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+    steps:
+    - bash: echo "This job only runs when GCP Hadolint Test passed"
