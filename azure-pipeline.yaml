@@ -1,0 +1,26 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: A
+  jobs:
+  - job: A1
+    steps:
+     - bash: echo "##vso[task.setvariable variable=shouldrun;isOutput=true]true"
+     # or on Windows:
+     # - script: echo ##vso[task.setvariable variable=shouldrun;isOutput=true]true
+       name: printvar
+
+- stage: B
+  dependsOn: A
+  jobs:
+  - job: B1
+    condition: in(stageDependencies.A.A1.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+    steps:
+    - script: echo hello from Job B1
+  - job: B2
+    condition: eq(stageDependencies.A.A1.outputs['printvar.shouldrun'], 'true')
+    steps:
+     - script: echo hello from Job B2
