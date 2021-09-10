@@ -1,17 +1,17 @@
 stages:
 - stage: Dev
   jobs:
-  - job: D1
-  - job: D2
+  - job: AA
+  - job: BB
     steps:
     - bash: echo "This is Dev"
 
 - stage: Devx
   jobs:
-  - job: D3
+  - job: DD
     steps:
     - bash: echo "This is bad job"
-  - job: D4
+  - job: EE
     steps:
     - bash: echo "This is good job"
 
@@ -20,8 +20,9 @@ stages:
   condition: succeededOrFailed()
   jobs:
   - job: UAT
+    condition: in(stageDependencies.Devx.DD.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     steps:
-    - bash: echo "This job only runs when Devx fails $[stageDependencies.Devx.D3.result]"
+    - bash: echo "This job only runs when Devx fails"
   - job: UAT2
     steps:
     - bash: echo "This job only runs when Devx fails"
