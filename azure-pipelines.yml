@@ -1,19 +1,16 @@
 stages:
-- stage: Dev
-  jobs:
-  - job: AA
-  - job: BB
-    steps:
-    - bash: echo "This is Dev"
 
 - stage: HadolintTests
   jobs:
   - job: AWS
     steps:
-    - bash: echo "This is bad job" | exit 0
+    - bash: echo "run AWS tests" | exit 0
   - job: Azure
     steps:
-    - bash: echo "This is good job" | exit 1
+    - bash: echo "run Azure tests" | exit 1
+  - job: GCP
+    steps:
+    - bash: echo "run GPC tests" | exit 0
 
 - stage: IntegrationTests
   dependsOn: HadolintTests
