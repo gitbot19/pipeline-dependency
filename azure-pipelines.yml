@@ -1,26 +1,27 @@
-trigger: none
-
-pool:
-  vmImage: 'ubuntu-latest'
-
 stages:
-- stage: A
+- stage: Dev
   jobs:
-  - job: A1
+  - job: D1
+  - job: D2
     steps:
-     - bash: echo "##vso[task.setvariable variable=shouldrun;isOutput=true]true" && exit 1
-     # or on Windows:
-     # - script: echo ##vso[task.setvariable variable=shouldrun;isOutput=true]true
-       name: printvar
+    - bash: echo "This is Dev"
 
-- stage: B
-  dependsOn: A
+- stage: Devx
   jobs:
-  - job: B1
-    condition: in(stageDependencies.A.A1.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+  - job: D3
     steps:
-    - script: echo hello from Job B1
-  - job: B2
-    condition: eq(stageDependencies.A.A1.outputs['printvar.shouldrun'], 'true')
+    - bash: echo "This is bad job" | exit 1
+  - job: D4
     steps:
-     - script: echo hello from Job B2
+    - bash: echo "This is good job"
+
+- stage: UAT
+  dependsOn: Devx
+  condition: failed()
+  jobs:
+  - job: UAT
+    steps:
+    - bash: echo "This job only runs when Devx fails"
+  - job: UAT2
+    steps:
+    - bash: echo "This job only runs when Devx fails"
