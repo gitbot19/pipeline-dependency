@@ -10,7 +10,7 @@ stages:
     - bash: echo "run Azure tests" | exit 1
   - job: GCP
     steps:
-    - bash: echo "run GPC tests" | exit 0
+    - bash: echo "run GCP tests" | exit 0
 
 - stage: IntegrationTests
   dependsOn: HadolintTests
